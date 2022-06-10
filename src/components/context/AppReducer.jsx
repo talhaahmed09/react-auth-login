@@ -1,21 +1,46 @@
 export const initialState = {
     user: {},
-    isLoggedIn: false
+    isLoggedIn: false,
+    isLoading:false,
+    isError:false
 }
 const appReducer = (state,action) => {
     const {type,payload} = action; 
 
     switch(type){
-        case 'LOG_IN':
+        case 'SET_LOGIN':
             console.log('logged-in',payload)
         return{
-            ...state
+            ...state,
+            isLoading: true,
+        };
+
+        case 'SET_LOGIN_SUCCESS':
+            console.log('logged-in',payload)
+        return{
+            ...state,
+            user: payload.user,
+            isLoggedIn: true,
+            isLoading: false
+        };
+
+        case 'SET_LOGIN_ERROR':
+            console.log('logged-in',payload)
+        return{
+            ...state,
+            isLoggedIn: false,
+            isLoading: false,
+            isError: true
+
         };
 
         case 'LOG_OUT':
             console.log('logged-out',payload)
         return{
-            ...state
+            ...state,
+            user: {},
+            isLoggedIn: false,
+            isLoading: false,
         };
 
         default:

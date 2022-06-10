@@ -1,14 +1,36 @@
 import { createContext, useContext, useReducer } from "react"
 import appReducer, {initialState} from "./AppReducer";
+import { users} from "../../data/data";
 
-const appContext = createContext(null);
+const AppContext = createContext(initialState);
 
-const AppContext = (children) => {
+export const AppProvider = ({children}) => {
 
     const [state, dispatch] = useReducer(appReducer,initialState);
+    const data = users;
 
     const logIn = (user) => {
+        let userData = null;
+        console.log(user,data)
+        dispatch({
+            type: 'SET_LOGIN'
+        });
 
+       userData = data.find(item => item.name === user.name);
+
+       if(userData){
+           dispatch({
+               type: 'SET_LOGIN_SUCCESS',
+               payload:{
+                   user : userData
+               }
+           });
+           return 
+       }else {
+           return dispatch({
+            type: 'SET_LOGIN_ERROR',
+        })
+       }
     }
 
     const LogOut = () => {
@@ -24,8 +46,6 @@ const AppContext = (children) => {
     <AppContext.Provider value={values} >{children}</AppContext.Provider>
   )
 }
-
-export default AppContext
 
 export const useApp = () => {
     const context = useContext(AppContext);
