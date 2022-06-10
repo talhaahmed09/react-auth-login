@@ -52,7 +52,7 @@ const Login = () => {
             onChange={onChange}
           />
         ))}
-        <button disabled={isLoding}>Submit</button>
+        <button>Submit</button>
       </form>
     </div>
   );

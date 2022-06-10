@@ -2,18 +2,20 @@ import { createContext, useContext, useReducer } from "react";
 import appReducer, { initialState } from "./AppReducer";
 import { users } from "../../data/data";
 import { useNavigate } from "react-router-dom";
+import useLocalStorage from "../hooks/LocalStorage";
 
 const AppContext = createContext(initialState);
 
 export const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(appReducer, initialState);
+  const [isLoggedIn,setisLoggedIn] = useLocalStorage('isLoggedIn',null);
+  const [user,setUser] = useLocalStorage('user',null);
   const data = users;
 
   const navigate = useNavigate();
 
   const logIn = (user) => {
     let userData = null;
-    console.log(user, data);
     dispatch({
       type: "SET_LOGIN",
     });
@@ -22,14 +24,17 @@ export const AppProvider = ({ children }) => {
 
     if (userData) {
       return setTimeout(() => {
+      
         dispatch({
           type: "SET_LOGIN_SUCCESS",
           payload: {
             user: userData,
           },
         });
+        setisLoggedIn(state.isLoggedIn)
+        setUser(userData)
         navigate('/dashboard')
-      }, 5000);
+      }, 10000);
     } else {
       return dispatch({
         type: "SET_LOGIN_ERROR",
