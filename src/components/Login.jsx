@@ -8,7 +8,7 @@ const Login = () => {
     password: "",
   };
   const [values, setValues] = useState(initialValue);
-  const {logIn} = useApp();
+  const {state: {isLoding}, logIn} = useApp();
 
   const inputs = [
     {
@@ -52,7 +52,7 @@ const Login = () => {
             onChange={onChange}
           />
         ))}
-        <button>Submit</button>
+        <button disabled={isLoding}>Submit</button>
       </form>
     </div>
   );

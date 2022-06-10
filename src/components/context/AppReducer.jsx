@@ -9,7 +9,7 @@ const appReducer = (state,action) => {
 
     switch(type){
         case 'SET_LOGIN':
-            console.log('logged-in',payload)
+            console.log('log-start',payload)
         return{
             ...state,
             isLoading: true,
@@ -25,7 +25,7 @@ const appReducer = (state,action) => {
         };
 
         case 'SET_LOGIN_ERROR':
-            console.log('logged-in',payload)
+            console.log('logged-error',payload)
         return{
             ...state,
             isLoggedIn: false,
