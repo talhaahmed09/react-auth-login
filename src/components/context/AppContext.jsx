@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useMemo, useReducer } from "react";
 import appReducer, { initialState } from "./AppReducer";
 import { users } from "../../data/data";
 import { useNavigate } from "react-router-dom";
@@ -24,17 +24,17 @@ export const AppProvider = ({ children }) => {
 
     if (userData) {
       return setTimeout(() => {
-      
         dispatch({
           type: "SET_LOGIN_SUCCESS",
           payload: {
             user: userData,
           },
         });
-        setisLoggedIn(state.isLoggedIn)
+        console.log(state)
+        setisLoggedIn(true)
         setUser(userData)
         navigate('/dashboard')
-      }, 10000);
+      }, 5000);
     } else {
       return dispatch({
         type: "SET_LOGIN_ERROR",
@@ -44,11 +44,10 @@ export const AppProvider = ({ children }) => {
 
   const LogOut = () => {};
 
-  const values = {
+  const values = useMemo(() => ( {
     state:state,
     logIn,
-    LogOut,
-  };
+    LogOut,}), [state.user])
   return <AppContext.Provider value={values}>{children}</AppContext.Provider>;
 };
 

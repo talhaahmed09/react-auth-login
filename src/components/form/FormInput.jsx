@@ -1,9 +1,10 @@
+import { useApp } from '../context/AppContext';
 import './FormInput.css'
 
 const FormInput = (props) => {
   const { label, onChange, id, ...inputProps } = props;
 
-
+  const {isError} = useApp();
 
     return (
       <div className="formInput">
@@ -12,7 +13,7 @@ const FormInput = (props) => {
         {...inputProps}
         onChange={onChange}
       />
-      {/* <span>{errorMessage}</span> */}
+      <span>{isError ? 'Credentials dont match any account' : null}</span>
     </div>
     )
 }

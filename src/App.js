@@ -9,7 +9,6 @@ function App() {
   return (
     <Router>
     <AppProvider>
-    <div className="app">
         <Routes>
           <Route path="/" element={<ProtectedRoutes/>}>
             <Route path="/dashboard" element={<Dashboard />} />
@@ -17,7 +16,7 @@ function App() {
             <Route path="/login" element={<Login/>}/>
         </Routes>
   
-    </div>
+
     </AppProvider>
     </Router>
   );

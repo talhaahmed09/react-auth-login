@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useApp } from "./context/AppContext";
 import FormInput from "./form/FormInput";
+import LoadingOverlay from 'react-loading-overlay';
+import './login.css'
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const initialValue = {
@@ -8,7 +11,16 @@ const Login = () => {
     password: "",
   };
   const [values, setValues] = useState(initialValue);
-  const {state: {isLoding}, logIn} = useApp();
+  const {state: {isLoading, user}, logIn} = useApp();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem('isLoggedIn')
+    console.log('login render :', isLoggedIn,isLoading)
+    if(isLoggedIn){
+      navigate('/dashboard')
+    }
+  },[user])
 
   const inputs = [
     {
@@ -41,6 +53,11 @@ const Login = () => {
   };
 
   return (
+    <LoadingOverlay
+  active={isLoading}
+  spinner
+  text='Logging in.....'
+  >
     <div className="app">
       <form onSubmit={handleSubmit}>
         <h1>Login</h1>
@@ -55,6 +72,7 @@ const Login = () => {
         <button>Submit</button>
       </form>
     </div>
+    </LoadingOverlay>
   );
 };
 

@@ -4,10 +4,9 @@ import { useApp } from '../context/AppContext';
 
 const ProtectedRoutes = () => {
 
-    const {state: {isLoggedIn}} = useApp();
-    console.log(useApp())
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
 
     return (isLoggedIn ? <Outlet /> :  <Navigate to='/login'/>)
 }
 
-export default ProtectedRoutes
+export default ProtectedRoutes;
